@@ -3,6 +3,7 @@ import { theme } from '../../../config/constants/theme'
 import { SEARCH_ICON } from '../../../config/constants/icons'
 import { useNavigate } from 'react-router'
 import { buildRoute } from '../../../config/config'
+import { SearchCompo } from './search.styles'
 
 const SearchComponent = () => {
 
@@ -23,11 +24,11 @@ const SearchComponent = () => {
     }
 
   return (    
-    <div style={{display: 'flex', justifyContent: 'center', alignItems:'center', gap: '4px'}}>
+    <SearchCompo>
             {SEARCH_ICON}
             <input type='text' placeholder='Search Username' name='search' value={searchValue} onChange={handleSearch}/>
             <button type="button" onClick={handleButton}>Analyze</button>
-        </div>
+    </SearchCompo>
   )
 }
 

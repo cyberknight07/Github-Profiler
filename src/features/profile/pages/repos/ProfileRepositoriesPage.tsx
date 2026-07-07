@@ -1,7 +1,10 @@
-import { Link, useParams } from 'react-router'
+import { useParams } from 'react-router'
 import { getUserRepos } from '../../../../shared/api/githubservice/searchUser';
 import { useEffect, useState } from 'react';
-import { buildRoute } from '../../../../config/config';
+import type { Repository } from './profileRepos';
+import { Wrapper } from '../profilePage/profile.styles';
+import UserCard from '../../../../shared/components/usercard/UserCard';
+import { ListWrapper } from '../follower/pfp.styles';
 
 function ProfileRepositoriesPage() {
   const { username } = useParams<string>()
@@ -21,17 +24,21 @@ function ProfileRepositoriesPage() {
     fetchRepos(username);
   }, []);
 
+    useEffect(() =>{
+    document.title = `Github - ${username} / Repositories`
+  })
+
   return (
-    <section>
+    <Wrapper>
       <h1>{username}&apos;s repos</h1>
-      <div>
-        {repos.map((repos: any) => (
+      <ListWrapper>
+        {repos.map((repos: Repository) => (
           <div>
-            <a target='blank' href={repos?.html_url}><div>{repos?.name}</div></a>
+            <a target='blank' href={repos?.html_url}><UserCard login={repos?.name} avatar={repos?.owner.avatar_url} description = {repos?.description}/></a>
           </div>
         ))}
-      </div>
-    </section>
+      </ListWrapper>
+    </Wrapper>
   )
 }
 

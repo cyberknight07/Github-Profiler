@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router';
 import { getGists } from '../../../../shared/api/githubservice/searchUser';
+import { Wrapper } from '../profilePage/profile.styles';
+import UserCard from '../../../../shared/components/usercard/UserCard';
+import type { Gists } from './profileGistsType';
 
 const ProfileGistsPage = () => {
 
@@ -18,15 +21,19 @@ const ProfileGistsPage = () => {
     fetchGists(username);
   }, []);
 
+    useEffect(() =>{
+    document.title = `Github - ${username} / Gists`
+  })
+
   return (
-    <div>
+    <Wrapper>
       <h1>{username}'s Gists</h1>
-      {gists?.map((gist: any, index: number) => (
+      {gists?.map((gist: Gists, index: number) => (
         <div key={index}>
-            <a href={gist?.html_url} target='blank'>{index+1} - {gist?.description}</a>
+            <a href={gist?.html_url} target='blank'><UserCard avatar={index+1} login={gist?.description} description=''/></a>
         </div>
       ))}
-    </div>
+    </Wrapper>
 
   )
 }

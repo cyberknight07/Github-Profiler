@@ -1,87 +1,76 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router";
-import { theme } from "../../../../config/constants/theme";
-import Card from "../../component/Card";
-import { getGists, getUser } from "../../../../shared/api/githubservice/searchUser";
+import { getUser } from "../../../../shared/api/githubservice/searchUser";
+import type { profileType } from "./profileTypes";
+import { Container, ImageDiv, Loader, ProfileCard, RouteCards, Wrapper } from "./profile.styles";
+import Card from "../../component/card/Card";
 
 function ProfilePage() {
   const { username } = useParams<string>();
-  const [profileData, setProfileData] = useState(null);
-  const [loading, setLoading] = useState(false);
-
-const [gists, setGists] = useState([]);
-    const [numberOfGists, setNumberOfGists] = useState();
+  const [profileData, setProfileData] = useState<profileType>();
+  const [loading, setLoading] = useState<boolean>(false);
+  const [error, setError] = useState<string | null>(null);
 
     const getUserProfile = async (username: string | undefined) => {
+      setLoading(true);
       if(!username) return;
       try {
         const response = await getUser(username);
-        setProfileData(response);  
-      } catch (error) {
+        setProfileData(response);
+      setLoading(false);
+      } catch (err : any) {
+        setError(err?.message)
+        setLoading(false);
         console.log("Profile Page --- API ---- ", error)
       } 
     }
 
 
-  useState(() => {
-    setLoading(true);
+
+  useEffect(() => {
     getUserProfile(username);
-    setLoading(false);
-  }, []);
+  }, [username]);
+
+  useEffect(() => {
+    document.title = `Github - ${username} (${profileData?.name}))`
+  })
 
   if(loading){
-    <div style={{textAlign: 'center'}}>Loading....</div>
+    return <Loader>Loading....</Loader>
   }
 
   return (
-    <div
-      style={{
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "center",
-        alignItems: "center",
-        flex: 1
-      }}
-    >
-      <div
-        style={{
-          display: "flex",
-          alignItems: "center",
-          width: "65vw",
-          gap: '20px',
-        }}>
+    <Wrapper>
+      <Container>
           {/* image */}
-          <div style={{width:'200px'}}>
-            <img src={profileData?.avatar_url} style={{objectFit: 'cover', height:'200px', width:'200px'}}/>
-          </div>
-          <div style={{display: "flex", flexDirection: "column", alignItems: 'start'}}>
+          <ImageDiv>
+            <img src={profileData?.avatar_url}/>
+          </ImageDiv>
+          <ProfileCard>
               
-                <h1>{profileData?.login}</h1>
+                <span>
+                <h5>{profileData?.login}</h5>
+                {profileData?.location && (
+                  <span>
+                    <h5>|</h5>
                 <h5>{profileData?.location}</h5>
+                  </span>
+                )}
+                </span>
+                <h1>{profileData?.name}</h1>
                 <p>{profileData?.bio}</p>
               {/* Follow Button */}
-                <button>Follow</button>
-              
-          </div>
-      </div>
+                <button><a target="blank" href={profileData?.html_url}>Github</a></button>
+          </ProfileCard>
+      </Container>
 
-        <div
-        style={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-between",
-          width: "65vw",
-          paddingTop: '20px',
-          paddingBottom: '20px'
-        }}>
-    
+        <RouteCards>
             <Card title = {'Followers'} count = {profileData?.followers}/>
             <Card title = {'Following'} count = {profileData?.following}/>
             <Card title = {'Gists'} count = {profileData?.public_gists}/>
             <Card title = {'Repositories'} count = {profileData?.public_repos}/>
-      
-        </div>
-    </div>
+        </RouteCards>
+    </Wrapper>
   );
 }
 

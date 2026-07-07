@@ -1,18 +1,19 @@
+import { FooterWrapper, Title, Foter } from "./Footer.styles"
 
 const Footer = () => {
   return (
-    <div style={{display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems:'center'}}>
+    <FooterWrapper>
         <hr style={{width: '100vw'}}/>
-        <div style={{display: 'flex', alignItems: 'center', width: '80vw'}}>
-            <pre><span className="text-headline-lg">Profiler</span></pre>    
+        <Foter>
+            <pre><Title>Profiler</Title></pre>    
             <pre>
               <span> @ 2026 Profiler</span>
             </pre>
             <pre>
               <span> Powered by cyberknight07</span>
             </pre>
-        </div>
-    </div>
+        </Foter>
+    </FooterWrapper>
   )
 }
 

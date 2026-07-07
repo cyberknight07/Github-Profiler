@@ -2,10 +2,14 @@ import { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router'
 import { getUserFollowings } from '../../../../shared/api/githubservice/searchUser';
 import { buildRoute } from '../../../../config/config';
+import type { FollowingResponse, FollowingsType } from './profileFollowingType';
+import { ListWrapper } from '../follower/pfp.styles';
+import UserCard from '../../../../shared/components/usercard/UserCard';
+import { Wrapper } from '../profilePage/profile.styles';
 
 function ProfileFollowingPage() {
    const { username } = useParams<string>()
-  const [followings, setFollowings] = useState([]);
+  const [followings, setFollowings] = useState<FollowingResponse>([]);
 
 
   const fetchFollowings = async (username : string | undefined) => {
@@ -21,17 +25,21 @@ function ProfileFollowingPage() {
     fetchFollowings(username);
   }, []);
 
+  useEffect(() =>{
+    document.title = `Github - ${username} / Followings`
+  })
+
   return (
-    <section>
+    <Wrapper>
       <h1>{username}&apos;s Followings</h1>
-      <div>
-        {followings.map((followings: any) => (
-          <div>
-            <Link to={buildRoute.profile(followings?.login)}><div>{followings?.login}</div></Link>
-          </div>
+      <ListWrapper>
+        {followings.map((followings: FollowingsType) => (
+  
+            <Link to={buildRoute.profile(followings?.login)}><UserCard login={followings?.login} avatar={followings?.avatar_url} description='' /></Link>
+        
         ))}
-      </div>
-    </section>
+      </ListWrapper>
+    </Wrapper>
   )
 }
 

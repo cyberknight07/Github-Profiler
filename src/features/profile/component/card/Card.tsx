@@ -1,19 +1,18 @@
 import React from 'react'
 import { Link, useParams } from 'react-router'
+import { CardContainer } from './card.styles';
 
 const Card = ({title, count}: any) => {
 
   const {username} = useParams();
 
   return (
-    <div className='p-4 border-1'>
+    <CardContainer>
         <Link to = {`/profile/${username}/${title}`}>
-          <div>
             <p>{title}</p>
             <p>{count}</p>
-          </div>
         </Link>
-    </div>
+    </CardContainer>
   )
 }
 
