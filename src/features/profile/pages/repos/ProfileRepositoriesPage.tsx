@@ -34,7 +34,7 @@ function ProfileRepositoriesPage() {
       <ListWrapper>
         {repos.map((repos: Repository) => (
           <div>
-            <a target='blank' href={repos?.html_url}><UserCard login={repos?.name} avatar={repos?.owner.avatar_url} description = {repos?.description}/></a>
+            <a target='blank' href={repos?.html_url}><UserCard login={repos?.name} avatar={repos?.owner.avatar_url} description={repos?.description ?? ''}/></a>
           </div>
         ))}
       </ListWrapper>

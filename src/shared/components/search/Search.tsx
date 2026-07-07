@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import { theme } from '../../../config/constants/theme'
 import { SEARCH_ICON } from '../../../config/constants/icons'
 import { useNavigate } from 'react-router'
 import { buildRoute } from '../../../config/config'

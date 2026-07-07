@@ -34,7 +34,7 @@ function ProfileFollowersPage() {
       <ListWrapper>
         {followers?.map((follower: FollowersType) => (
           
-            <Link to={buildRoute.profile(follower?.login)}><UserCard login={follower?.login} avatar={follower?.avatar_url} /></Link>
+            <Link to={buildRoute.profile(follower?.login)}><UserCard login={follower?.login} avatar={follower?.avatar_url} description="" /></Link>
         
         ))}
       </ListWrapper>

@@ -1,4 +1,3 @@
-import React from 'react'
 import { theme } from '../../../config/constants/theme'
 import { Link, useParams } from 'react-router'
 import { buildRoute, config} from '../../../config/config'

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useParams } from 'react-router';
 import { getGists } from '../../../../shared/api/githubservice/searchUser';
 import { Wrapper } from '../profilePage/profile.styles';

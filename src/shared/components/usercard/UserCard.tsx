@@ -1,10 +1,9 @@
-import React from 'react'
 import { ImageDiv, Para, UserWrapper } from './usercard.styles'
 
 type UserProps = {
     login: string | null,
     avatar: string | number,
-    description: string | ""
+    description?: string
 }
 
 const UserCard = ({login, avatar, description = ""} : UserProps) => {

@@ -24,7 +24,7 @@ export const Headerr = styled.div`
 
 export const Title = styled.span`
     font-family: Inter;
-      /* font-size: ${(props) => props.size|| '16px'}; */
+      font-size: 16px;
       font-weight: 700;
       line-height: 1.2;
       letter-spacing: -0.01em;
